@@ -10,7 +10,7 @@ app.use(
         extended:true,
     })
 )
-const pool = new pool({
+const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'mahasiswa',
@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
     console.log("TEST DATA :");
 
     pool.query('SELECT * FROM biodata ORDER BY id')
-        then(result => {
+        .then(result => {
             res.send(result.rows);
         })
         .catch(err => {
@@ -92,3 +92,7 @@ app.delete('/biodata/:id', (req,res) => {
         res.status(500).send('Internal Server Error');
     });
 });
+
+app.listen(port, () => {
+    console.log(`Server berjalan di port ${port}`)
+})
